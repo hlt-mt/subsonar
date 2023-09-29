@@ -1,0 +1,8 @@
+sonar-space
+argparse
+srt
+torchaudio
+numpy>=1.21
+torch
+tqdm
+fairseq2
