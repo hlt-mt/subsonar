@@ -22,7 +22,7 @@ from sonar_metric import SonarAudioTextMetric
 from srt_reader import SrtReader
 
 
-logging.basicConfig()
+logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger()
 
 
@@ -71,12 +71,12 @@ if __name__ == '__main__':
         help='floating point width.')
 
     parser.add_argument(
-        '--audio-lang', '-al', type=str, default="eng",
-        help='language of the speech in the audio file (default: eng).')
+        '--audio-lang', '-al', type=str, required=True,
+        help='language of the speech in the audio file in three-letter code (e.g. eng).')
 
     parser.add_argument(
-        '--text-lang', '-tl', type=str, default="eng_Latn",
-        help='language of the text in the SRT file (default: eng_Latn).')
+        '--text-lang', '-tl', type=str, required=True,
+        help='language of the text in the SRT file in Flores 200 format (e.g. eng_Latn).')
 
     parser.add_argument(
         '--batch-size', '-bs', type=int, default=10,
@@ -87,6 +87,7 @@ if __name__ == '__main__':
         help='the p-value to use to build a confidence interval for the estimated metric.')
 
     parsed_args = parser.parse_args()
+    LOGGER.info(f"Starting evaluation with arguments: {parsed_args}")
     assert len(parsed_args.srt_files) == len(parsed_args.audio_files), \
         f"SRT (len={len(parsed_args.srt_files)}) and audio (len={len(parsed_args.audio_files)}) " \
         "files should match"
