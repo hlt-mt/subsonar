@@ -13,6 +13,7 @@ stages:
   - build
 
 before_script:
+  - apt-get update && apt-get --yes install libsndfile1
   - python --version  # For debugging
   - pip install virtualenv
   - virtualenv venv

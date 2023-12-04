@@ -12,11 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 from typing import List
+import logging
 
 from sonar.inference_pipelines import TextToEmbeddingModelPipeline
 from sonar.inference_pipelines.speech import SpeechToEmbeddingModelPipeline
 import torch as torch
 from torch.nn import functional as F
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class SonarAudioTextMetric:
@@ -120,6 +124,8 @@ class SonarAudioTextMetric:
         """
         text_embedding = self.text_encoder.predict([text], source_lang=self.text_lang)
         speech_embedding = self.audio_encoder.predict([audio])
+        self.nan_to_zero(text_embedding, text, emb_type="text")
+        self.nan_to_zero(speech_embedding, text, emb_type="audio")
         return F.cosine_similarity(text_embedding, speech_embedding).item()
 
     def batch_score(self, texts: List[str], audios: List[torch.Tensor]) -> List[float]:
@@ -133,7 +139,22 @@ class SonarAudioTextMetric:
         """
         text_embeddings = self.text_encoder.predict(texts, source_lang=self.text_lang)
         speech_embeddings = self.audio_encoder.predict(audios)
+        self.nan_to_zero(text_embeddings, texts, emb_type="text")
+        self.nan_to_zero(speech_embeddings, texts, emb_type="audio")
         return F.cosine_similarity(text_embeddings, speech_embeddings).tolist()
+
+    def nan_to_zero(self, embeddings, text, emb_type="audio"):
+        """
+        Sets to 0.0 embeddings that are NaN.
+        This happens when the audio slice is less than 40 ms or with empty text.
+        """
+        nan_mask = embeddings.isnan()
+        if nan_mask.any():
+            LOGGER.warning(
+                f"Found NaN in {emb_type} embeddings for: {text}\nSetting to zero. This usually "
+                "happens when the audio slice is less than 40 ms or with empty text. Please check "
+                "your data.")
+            embeddings.masked_fill_(nan_mask, 0.0)
 
     def merge_scores(self, scores: List[float]) -> float:
         return sum(scores) / len(scores)
