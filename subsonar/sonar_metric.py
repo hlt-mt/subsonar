@@ -113,6 +113,7 @@ class SonarAudioTextMetric:
             tokenizer="text_sonar_basic_encoder",
             device=device)
 
+    @torch.inference_mode()
     def score(self, text: str, audio: torch.Tensor) -> float:
         """
         Scores the similarity between the given audio and text using the cosine similarity of their
@@ -128,6 +129,7 @@ class SonarAudioTextMetric:
         self.nan_to_zero(speech_embedding, text, emb_type="audio")
         return F.cosine_similarity(text_embedding, speech_embedding).item()
 
+    @torch.inference_mode()
     def batch_score(self, texts: List[str], audios: List[torch.Tensor]) -> List[float]:
         """
         Scores the similarity between the given audio and text using the cosine similarity of their

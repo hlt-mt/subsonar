@@ -3,6 +3,6 @@ argparse
 srt
 torchaudio
 numpy>=1.21
-torch
+torch>=1.9
 tqdm
 fairseq2
