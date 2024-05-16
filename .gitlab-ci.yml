@@ -22,7 +22,7 @@ before_script:
 test:
   stage: test
   script:
-    - python -m pip install -r requirements.txt
+    - python -m pip install -e .[dev]
     - python -m unittest discover -s tests
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

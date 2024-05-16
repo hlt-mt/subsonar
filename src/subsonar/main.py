@@ -18,8 +18,8 @@ import torch
 from tqdm import tqdm
 from typing import List, Optional
 
-from sonar_metric import SonarAudioTextMetric
-from srt_reader import SrtReader
+from subsonar.sonar_metric import SonarAudioTextMetric
+from subsonar.srt_reader import SrtReader
 
 
 logging.basicConfig(level=logging.INFO)
@@ -55,7 +55,11 @@ def main(
     print(f"SubSONAR v1.0 = {'{:.{}f}'.format(overall_score, width)}")
 
 
-if __name__ == '__main__':
+def cli_script():
+    """
+    Wrapper function for CLI script that reads arguments and invokes the main function,
+    which computes SubSONAR.
+    """
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument(
@@ -92,3 +96,7 @@ if __name__ == '__main__':
         f"SRT (len={len(parsed_args.srt_files)}) and audio (len={len(parsed_args.audio_files)}) " \
         "files should match"
     main(**parsed_args.__dict__)
+
+
+if __name__ == '__main__':
+    cli_script()

@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "SubSONAR"
+version = "1.0"
+authors = [
+  { name="Marco Gaido", email="mgaido@fbk.eu" }
+]
+description = "Evaluate the quality of SRT files using the multilingual multimodal SONAR model."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: Apache-2.0",
+    "Operating System :: OS Independent",
+    "Topic :: Automatic Subtitling :: Evaluation",
+]
+dependencies = [
+    "sonar-space",
+    "argparse",
+    "srt",
+    "torchaudio",
+    "numpy>=1.21",
+    "torch>=1.9",
+    "tqdm",
+    "fairseq2"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/hlt-mt/subsonar"
+"Bug Tracker" = "https://github.com/hlt-mt/subsonar/issues"
+
+[project.optional-dependencies]
+dev = ["flake8"]
+release = ["build", "twine", "sphinx", "sphinx-rtd-theme"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+subsonar = "subsonar.main:cli_script"

@@ -14,7 +14,7 @@ Ensure that you have `libsndfile` installed in you environment.
 Then, run:
 
 ```bash
-pip install -r requirements.txt
+pip install -e .
 ```
 
 The installation has been tested with python 3.8 and 3.10.
@@ -24,7 +24,7 @@ The installation has been tested with python 3.8 and 3.10.
 Example usage for Italian SRTs and English audios of two files (1 and 2):
 
 ```bash
-python subsonar/main.py \
+subsonar \
   --srt-files 1.srt 2.srt \
   --audio-files 1.wav 2.wav \
   --text-lang ita_Latn --audio-lang eng \
@@ -40,17 +40,22 @@ while the text encoder (`--text-lang`) supports the
 
 ## License
 
-**SONAR Subtitling Evaluator** is licensed under [Apache Version 2.0](LICENSE). 
+**SONAR Subtitling Evaluator** is licensed under [Apache Version 2.0](LICENSE).
+
+However, the SONAR encoders have a dedicated license that can be found
+in [their repository LICENSE](https://github.com/facebookresearch/SONAR/blob/main/LICENSE.md).
+Please check the license for the encoders you are using.
 
 ## Citation
 
 If you find this project useful, please cite:
 
 ```bibtex
-@misc{subsonar-2024,
-  author = {Marco Gaido, Sara Papi, Matteo Negri, Mauro Cettolo, Luisa Bentivogli},
-  title = {{Pay Attention to Block Timestamp Estimation for Direct Automatic Subtitling}},
-  publisher = {arXiv},
-  year = {2024},
+@inproceedings{gaido-et-al-2024-sbaam,
+title = {{SBAAM! Eliminating Transcript Dependency in Automatic Subtitling}},
+author = {Gaido, Marco and Papi, Sara and Negri, Matteo and Cettolo, Mauro and Bentivogli, Luisa},
+booktitle = "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+year = "2024",
+address = "Bangkok, Thailand",
 }
 ```

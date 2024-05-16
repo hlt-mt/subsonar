@@ -1,8 +1,0 @@
-sonar-space
-argparse
-srt
-torchaudio
-numpy>=1.21
-torch>=1.9
-tqdm
-fairseq2
