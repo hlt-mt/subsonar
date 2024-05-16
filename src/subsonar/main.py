@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 import argparse
+from importlib.metadata import version
 import logging
 
 import torch
@@ -52,7 +53,7 @@ def main(
     overall_score = metric.merge_scores(scores)
     if bootstrap_ci_alpha is not None:
         raise NotImplementedError("CI has not been implemented yet")
-    print(f"SubSONAR v1.0 = {'{:.{}f}'.format(overall_score, width)}")
+    print(f"SubSONAR v{version('subsonar')} = {'{:.{}f}'.format(overall_score, width)}")
 
 
 def cli_script():

@@ -14,6 +14,12 @@ Ensure that you have `libsndfile` installed in you environment.
 Then, run:
 
 ```bash
+pip install SubSONAR
+```
+
+or, in the source root of this repository:
+
+```bash
 pip install -e .
 ```
 
