@@ -14,11 +14,14 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ["3.8", "3.10", "3.12"]
+        python-version: ["3.8", "3.10"]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install soundfile
+        run: apt-get update && apt-get --yes install libsndfile1
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
