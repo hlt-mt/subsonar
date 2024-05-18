@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install soundfile
-        run: apt-get update && apt-get --yes install libsndfile1
+        run: sudo apt-get update && sudo apt-get --yes install libsndfile1
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
